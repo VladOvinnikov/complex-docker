@@ -16,7 +16,7 @@ after_success:
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker pushcomplex-docker/client
-  - docker pushcomplex-docker/nginx
-  - docker pushcomplex-docker/server
-  - docker pushcomplex-docker/worker
+  - docker push complex-docker/client
+  - docker push complex-docker/nginx
+  - docker push complex-docker/server
+  - docker push complex-docker/worker
