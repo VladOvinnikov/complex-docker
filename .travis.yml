@@ -3,20 +3,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t complex-docker/client-test -f ./client/Dockerfile.dev ./client
+  - docker build -t jaxov/client-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run complex-docker/client-test yarn test -- --coverage
+  - docker run jaxov/client-test yarn test -- --coverage
 
 after_success:
-  - docker build -t complex-docker/client ./client
-  - docker build -t complex-docker/nginx ./nginx
-  - docker build -t complex-docker/server ./server
-  - docker build -t complex-docker/worker ./worker
+  - docker build -t jaxov/client ./client
+  - docker build -t jaxov/nginx ./nginx
+  - docker build -t jaxov/server ./server
+  - docker build -t jaxov/worker ./worker
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker push complex-docker/client
-  - docker push complex-docker/nginx
-  - docker push complex-docker/server
-  - docker push complex-docker/worker
+  - docker push jaxov/client
+  - docker push jaxov/nginx
+  - docker push jaxov/server
+  - docker push jaxov/worker
