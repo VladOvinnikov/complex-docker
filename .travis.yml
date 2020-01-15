@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t complex-docker/client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run complex-docker/client-test yarn test -- --coverage
+
+after_success:
+  - docker build -t complex-docker/client ./client
+  - docker build -t complex-docker/nginx ./nginx
+  - docker build -t complex-docker/server ./server
+  - docker build -t complex-docker/worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker pushcomplex-docker/client
+  - docker pushcomplex-docker/nginx
+  - docker pushcomplex-docker/server
+  - docker pushcomplex-docker/worker
